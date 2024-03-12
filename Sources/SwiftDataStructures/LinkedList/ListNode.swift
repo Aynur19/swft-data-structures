@@ -15,3 +15,21 @@ where V: Comparable {
         self.next = next
     }
 }
+
+extension ListNode: Equatable {
+    public static func == (lhs: ListNode<V>, rhs: ListNode<V>) -> Bool {
+        var lhs = lhs
+        var rhs = rhs
+        
+        while true {
+            if lhs.val != rhs.val { return false }
+            
+            guard let left = lhs.next, let right = rhs.next else {
+                return lhs.next == nil && rhs.next == nil
+            }
+            
+            lhs = left
+            rhs = right
+        }
+    }
+}
