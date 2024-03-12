@@ -14,8 +14,34 @@ where V: Comparable {
     private var count = 0
         
     public init() { }
+    
+    public init(_ values: [V]) {
+        for value in values {
+            addAtEnd(value)
+        }
+    }
+    
+    public init(_ node: ListNode<V>) {
+        head = node
+        end = head
+        count = getCount()
+    }
+    
+    func getCount() -> Int {
+        guard var tmp = head else { return 0 }
+        var count = 1
         
-    private func getNode(_ index: Int) -> Node? {
+        while true {
+            if let next = tmp.next {
+                tmp = next
+                count += 1
+            } else { break }
+        }
+        
+        return count
+    }
+        
+    func getNode(_ index: Int) -> Node? {
         guard index >= 0, index < count,
               var tmp = head
         else { return nil }
@@ -145,6 +171,7 @@ extension LinkedList {
     }
 }
     
+
 extension LinkedList {
     func deleteFromHead() -> Bool { removeFromHead() != nil }
     
@@ -153,7 +180,65 @@ extension LinkedList {
     func deleteFromIndex(_ index: Int) -> Bool { removeFromIndex(index) != nil }
 }
 
+
 extension LinkedList: CustomStringConvertible
 where V: CustomStringConvertible {
     public var description: String { head?.description ?? "[]" }
+}
+
+
+// MARK: LeetCode Problems Solutons
+extension LinkedList<Int> {
+    // MARK: 1171. Remove Zero Sum Consecutive Nodes from Linked List
+    // link: https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
+    // Approach: Hash Table, LinkedList
+    // Time complexity: O(n) => 12 ms
+    // Space complexity: O(n) => 15.66 MB
+    func removeZeroSumSublists() {
+        guard var head = head else { return }
+        head = .init(0, next: head)
+        
+        var sum = 0
+        var dict = [Int:ListNode<Int>]() // [index:sum]
+        
+        func deleteNodes(_ node: ListNode<Int>, sum: Int) -> Int {
+            var tmpNode = node
+            var tmpSum = sum
+            var removedCount = 0
+            
+            while true {
+                if let next = tmpNode.next {
+                    tmpNode = next
+                    tmpSum += tmpNode.val
+                } else { return removedCount }
+                
+                if tmpSum == sum { return removedCount }
+                
+                dict[tmpSum] = nil
+                removedCount += 1
+            }
+        }
+        
+        var tmp = head
+        while true {
+            sum += tmp.val
+            
+            if let node = dict[sum] {
+                let removedCount = deleteNodes(node, sum: sum) + 1
+                
+                node.next = tmp.next
+                tmp.next = nil
+                tmp = node
+                count -= removedCount
+            } else {
+                dict[sum] = tmp
+            }
+            
+            if let next = tmp.next {
+                tmp = next
+            } else { break }
+        }
+        
+        self.head = head.next
+    }
 }

@@ -16,6 +16,7 @@ where V: Comparable {
     }
 }
 
+
 extension ListNode: Equatable {
     public static func == (lhs: ListNode<V>, rhs: ListNode<V>) -> Bool {
         var lhs = lhs
@@ -33,6 +34,7 @@ extension ListNode: Equatable {
         }
     }
 }
+
 
 extension ListNode: CustomStringConvertible
 where V: CustomStringConvertible {

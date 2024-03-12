@@ -9,10 +9,9 @@
 import XCTest
 
 final class LinkedListTests: XCTestCase {
-    typealias TestCase = [(command: String, args: [Int], expected: Int)]
-    
-    lazy var testCases: [TestCase] = {
-        var testsData = [TestCase]()
+    // MARK: LeetCode Problem 707. Design Linked List
+    lazy var testCases_707: [[(command: String, args: [Int], expected: Int)]] = {
+        var testsData = [[(command: String, args: [Int], expected: Int)]]()
         
         testsData.append([
             (command: "LinkedList",         args: [], expected: 0),
@@ -63,8 +62,8 @@ final class LinkedListTests: XCTestCase {
         return testsData
     }()
 
-    func testsLinkedList() throws {
-        for testCase in testCases {
+    func testsProblem_707() throws {
+        for testCase in testCases_707 {
             let list = LinkedList<Int>()
             
             for data in testCase {
@@ -90,4 +89,37 @@ final class LinkedListTests: XCTestCase {
         }
     }
 
+    
+    // MARK: LeetCode Problem 1171. Remove Zero Sum Consecutive Nodes from Linked List
+    lazy var testCases_1171: [(values: [Int], expected: ListNode<Int>?)] = {
+        var testsData = [(values: [Int], expected: ListNode<Int>?)]()
+        
+        testsData.append((
+            values: [1, 2, -3, 3, 1],
+            expected: .init(3, next: .init(1))
+        ))
+        
+        testsData.append((
+            values: [1, 2, 3, -3, 4],
+            expected: .init(1, next: .init(2, next: .init(4)))
+        ))
+        
+        testsData.append((
+            values: [1, 2, 3, -3, -2],
+            expected: .init(1)
+        ))
+        
+        return testsData
+    }()
+    
+    func testsProblem_1171() throws {
+        for data in testCases_1171 {
+            let list = LinkedList<Int>(data.values)
+            let message = "values: \(data.values)"
+            
+            list.removeZeroSumSublists()
+            
+            XCTAssertEqual(list.getNode(0), data.expected, message)
+        }
+    }
 }

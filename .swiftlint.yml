@@ -5,3 +5,4 @@ disabled_rules:
   - switch_case_alignment
   - colon
   - large_tuple
+  - identifier_name
