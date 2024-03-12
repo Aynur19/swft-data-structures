@@ -33,3 +33,21 @@ extension ListNode: Equatable {
         }
     }
 }
+
+extension ListNode: CustomStringConvertible
+where V: CustomStringConvertible {
+    public var description: String {
+        var tmp = self
+        var result = ["[", "\(tmp.val)"]
+        
+        while true {
+            if let next = tmp.next {
+                result.append(" -> \(next.val)")
+                tmp = next
+            } else { break }
+        }
+        
+        result.append("]")
+        return result.joined()
+    }
+}

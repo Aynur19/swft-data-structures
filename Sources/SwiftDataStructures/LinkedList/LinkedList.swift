@@ -155,18 +155,5 @@ extension LinkedList {
 
 extension LinkedList: CustomStringConvertible
 where V: CustomStringConvertible {
-    public var description: String {
-        guard var tmp = head else { return "[]" }
-        var result = ["[", "\(tmp.val)"]
-        
-        while true {
-            if let next = tmp.next {
-                result.append(" -> \(next.val)")
-                tmp = next
-            } else { break }
-        }
-        
-        result.append("]")
-        return result.joined()
-    }
+    public var description: String { head?.description ?? "[]" }
 }
