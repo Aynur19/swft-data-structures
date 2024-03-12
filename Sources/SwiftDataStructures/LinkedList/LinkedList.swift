@@ -13,7 +13,7 @@ where V: Comparable {
     private var end:  Node?
     private var count = 0
         
-    init() { }
+    public init() { }
         
     private func getNode(_ index: Int) -> Node? {
         guard index >= 0, index < count,
