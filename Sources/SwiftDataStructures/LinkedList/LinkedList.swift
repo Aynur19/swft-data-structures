@@ -58,14 +58,14 @@ where V: Comparable {
         return tmp
     }
     
-    public func get(_ index: Int) -> ValueType? { getNode(index)?.val }
+    public func get(_ index: Int) -> V? { getNode(index)?.val }
     
     public func empty() -> Bool { count == 0 }
 }
         
 extension LinkedList {
     public func addAtHead(_ val: V) {
-        let newHead = Node(val)
+        let newHead = ListNode<V>(val)
         newHead.next = head
         head = newHead
         
@@ -103,7 +103,7 @@ extension LinkedList {
         
         guard let prev = getNode(index - 1) else { return false }
         
-        let addedNode = Node(val)
+        let addedNode = ListNode<V>(val)
         addedNode.next = prev.next
         prev.next = addedNode
         
