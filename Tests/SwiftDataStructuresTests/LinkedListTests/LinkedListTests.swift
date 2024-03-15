@@ -62,7 +62,7 @@ final class LinkedListTests: XCTestCase {
         return testsData
     }()
 
-    func testsProblem_707() throws {
+    func testsLinkedList() throws {
         for testCase in testCases_707 {
             let list = LinkedList<Int>()
             
@@ -112,7 +112,7 @@ final class LinkedListTests: XCTestCase {
         return testsData
     }()
     
-    func testsProblem_1171() throws {
+    func testsRemoveZeroSumSublists() throws {
         for data in testCases_1171 {
             let list = LinkedList<Int>(data.values)
             let message = "values: \(data.values)"
