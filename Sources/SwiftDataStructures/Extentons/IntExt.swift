@@ -9,7 +9,7 @@ extension Int {
     // Approach: Math
     // Time complexity: O(n^(0.5))
     // Space complexity: O(1)
-    static func pivotInteger(_ n: Int) -> Int {
+    public static func pivotInteger(_ n: Int) -> Int {
         guard n > 1 else { return 1 }
         
         var start = n / 2

@@ -7,10 +7,8 @@
 
 public final class LinkedList<V>: LinkedListProtocol
 where V: Comparable {
-    typealias Node = ListNode<V>
-    
-    private var head: Node?
-    private var end:  Node?
+    private var head: ListNode<V>?
+    private var end:  ListNode<V>?
     private var count = 0
         
     public init() { }
@@ -27,7 +25,7 @@ where V: Comparable {
         count = getCount()
     }
     
-    func getCount() -> Int {
+    public func getCount() -> Int {
         guard var tmp = head else { return 0 }
         var count = 1
         
@@ -41,7 +39,7 @@ where V: Comparable {
         return count
     }
         
-    func getNode(_ index: Int) -> Node? {
+    public func getNode(_ index: Int) -> ListNode<V>? {
         guard index >= 0, index < count,
               var tmp = head
         else { return nil }
@@ -60,13 +58,13 @@ where V: Comparable {
         return tmp
     }
     
-    func get(_ index: Int) -> ValueType? { getNode(index)?.val }
+    public func get(_ index: Int) -> ValueType? { getNode(index)?.val }
     
-    func empty() -> Bool { count == 0 }
+    public func empty() -> Bool { count == 0 }
 }
         
 extension LinkedList {
-    func addAtHead(_ val: V) {
+    public func addAtHead(_ val: V) {
         let newHead = Node(val)
         newHead.next = head
         head = newHead
@@ -78,7 +76,7 @@ extension LinkedList {
         count += 1
     }
     
-    func addAtEnd(_ val: V) {
+    public func addAtEnd(_ val: V) {
         if let end = end {
             end.next = .init(val)
             self.end = end.next
@@ -90,7 +88,7 @@ extension LinkedList {
         count += 1
     }
     
-    func addAtIndex(_ index: Int, _ val: V) -> Bool {
+    public func addAtIndex(_ index: Int, _ val: V) -> Bool {
         guard index <= count else { return false }
         
         guard index > 0 else {
@@ -115,7 +113,7 @@ extension LinkedList {
 }
     
 extension LinkedList {
-    func removeFromHead() -> V? {
+    public func removeFromHead() -> V? {
         guard let head = head else { return nil }
         
         self.head = head.next
@@ -129,7 +127,7 @@ extension LinkedList {
         return head.val
     }
     
-    func removeFromEnd() -> V? {
+    public func removeFromEnd() -> V? {
         guard let end = end else { return nil }
         let removedValue = end.val
         
@@ -148,7 +146,7 @@ extension LinkedList {
         return removedValue
     }
     
-    func removeFromIndex(_ index: Int) -> V? {
+    public func removeFromIndex(_ index: Int) -> V? {
         guard index < count else { return nil }
         
         guard index > 0 else {
@@ -173,11 +171,11 @@ extension LinkedList {
     
 
 extension LinkedList {
-    func deleteFromHead() -> Bool { removeFromHead() != nil }
+    public func deleteFromHead() -> Bool { removeFromHead() != nil }
     
-    func deleteFromEnd() -> Bool { removeFromEnd() != nil }
+    public func deleteFromEnd() -> Bool { removeFromEnd() != nil }
     
-    func deleteFromIndex(_ index: Int) -> Bool { removeFromIndex(index) != nil }
+    public func deleteFromIndex(_ index: Int) -> Bool { removeFromIndex(index) != nil }
 }
 
 
@@ -194,7 +192,7 @@ extension LinkedList<Int> {
     // Approach: Hash Table, LinkedList
     // Time complexity: O(n) => 12 ms
     // Space complexity: O(n) => 15.66 MB
-    func removeZeroSumSublists() {
+    public func removeZeroSumSublists() {
         guard var head = head else { return }
         head = .init(0, next: head)
         
