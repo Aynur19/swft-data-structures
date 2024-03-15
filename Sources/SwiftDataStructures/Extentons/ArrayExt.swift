@@ -6,7 +6,30 @@
 //
 
 extension Array<Int> {
-    // LeetCode problem: https://leetcode.com/problems/product-of-array-except-self/
+    // MARK: LeetCode Problem 1. Two Sum
+    // Link: https://leetcode.com/problems/two-sum/description/
+    // Approach: Hash Table
+    // Time complexity: O(n)
+    // Space complexity: O(n)
+    public func twoSum(_ target: Int) -> [Int] {
+        guard self.count > 1 else { return [] }
+        var dict = [Int:Int]()
+        
+        for idx in self.indices {
+            let num = self[idx]
+            
+            if let index = dict[target - num] {
+                return [index, idx]
+            }
+            
+            dict[num] = idx
+        }
+        
+        return []
+    }
+    
+    // MARK: LeetCode Problem 238. Product of Array Except Self
+    // Link: https://leetcode.com/problems/product-of-array-except-self/
     // Approach: Array, Prefix Sum
     // Time complexity: O(n)
     // Space complexity: O(1)
@@ -28,4 +51,6 @@ extension Array<Int> {
         
         return result
     }
+    
+    
 }
