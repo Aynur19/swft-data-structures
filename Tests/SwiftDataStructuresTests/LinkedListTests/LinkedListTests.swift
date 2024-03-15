@@ -62,7 +62,7 @@ final class LinkedListTests: XCTestCase {
         return testsData
     }()
 
-    func testsLinkedList() throws {
+    func tests_linkedList() throws {
         for testCase in testCases_707 {
             let list = LinkedList<Int>()
             
@@ -90,7 +90,50 @@ final class LinkedListTests: XCTestCase {
     }
 
     
+    // MARK: LeetCode Problem 2. Add Two Numbers
+    // Link: https://leetcode.com/problems/add-two-numbers/
+    lazy var testCases_2: [(l1: ListNode<Int>?, l2: ListNode<Int>?, expected: ListNode<Int>?)] = {
+        var testsData = [(l1: ListNode<Int>?, l2: ListNode<Int>?, expected: ListNode<Int>?)]()
+        
+        testsData.append((
+            l1: LinkedList([2, 4, 3]).getNode(0),
+            l2: LinkedList([5, 6, 4]).getNode(0),
+            expected: LinkedList([7, 0, 8]).getNode(0)
+        ))
+        
+        testsData.append((
+            l1: .init(0),
+            l2: .init(0),
+            expected: .init(0)
+        ))
+        
+        testsData.append((
+            l1: LinkedList([9, 9, 9, 9, 9, 9, 9]).getNode(0),
+            l2: LinkedList([9, 9, 9, 9]).getNode(0),
+            expected: LinkedList([8, 9, 9, 9, 0, 0, 0, 1]).getNode(0)
+        ))
+        
+        testsData.append((
+            l1: LinkedList([2, 4, 9]).getNode(0),
+            l2: LinkedList([5, 6, 4, 9]).getNode(0),
+            expected: LinkedList([7, 0, 4, 0, 1]).getNode(0)
+        ))
+        
+        return testsData
+    }()
+    
+    func tests_addNumbers() throws {
+        for data in testCases_2 {
+            let message = "l1: \(data.l1?.description ?? "[]"); l2: \(data.l2?.description ?? "[]")"
+            let actual = LinkedList.addNumbers(data.l1, data.l2)
+            
+            XCTAssertEqual(actual, data.expected, message)
+        }
+    }
+    
+    
     // MARK: LeetCode Problem 1171. Remove Zero Sum Consecutive Nodes from Linked List
+    // link: https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
     lazy var testCases_1171: [(values: [Int], expected: ListNode<Int>?)] = {
         var testsData = [(values: [Int], expected: ListNode<Int>?)]()
         
@@ -112,7 +155,7 @@ final class LinkedListTests: XCTestCase {
         return testsData
     }()
     
-    func testsRemoveZeroSumSublists() throws {
+    func tests_removeZeroSumSublists() throws {
         for data in testCases_1171 {
             let list = LinkedList<Int>(data.values)
             let message = "values: \(data.values)"

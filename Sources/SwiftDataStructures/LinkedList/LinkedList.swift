@@ -187,7 +187,62 @@ where V: CustomStringConvertible {
 
 // MARK: LeetCode Problems Solutons
 extension LinkedList<Int> {
-    // MARK: 1171. Remove Zero Sum Consecutive Nodes from Linked List
+    // MARK: LeetCode Problem 2. Add Two Numbers
+    // Link: https://leetcode.com/problems/add-two-numbers/
+    // Approach: Linked List
+    // Time complexity: O(n)
+    // Space complexity: O(n)
+    public static func addNumbers(_ l1: ListNode<Int>?, _ l2: ListNode<Int>?) -> ListNode<Int>? {
+        guard var l1 = l1 else { return l2 }
+        guard var l2 = l2 else { return l1 }
+        
+        let head = ListNode(0)
+        var tmp = head
+        var val = 0
+        
+        while true {
+            val += l1.val + l2.val
+            let tmpNext = ListNode(val % 10)
+            tmp.next = tmpNext
+            tmp = tmpNext
+            val /= 10
+            
+            if let next = l1.next {
+                l1 = next
+            } else {
+                tmp.next = l2.next
+                break
+            }
+            
+            if let next = l2.next {
+                l2 = next
+            } else {
+                tmp.next = l1
+                break
+            }
+        }
+        
+        while true {
+            if let next = tmp.next {
+                val += next.val
+                let tmpNext = ListNode(val % 10, next: next.next)
+               
+                tmp.next = tmpNext
+                tmp = tmpNext
+                
+                next.next = nil
+                val /= 10
+            } else { break }
+        }
+        
+        if val > 0 {
+            tmp.next = .init(val)
+        }
+        
+        return head.next
+    }
+    
+    // MARK: LeetCode Problem 1171. Remove Zero Sum Consecutive Nodes from Linked List
     // link: https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
     // Approach: Hash Table, LinkedList
     // Time complexity: O(n) => 12 ms
