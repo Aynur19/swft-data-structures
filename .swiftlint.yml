@@ -6,3 +6,4 @@ disabled_rules:
   - colon
   - large_tuple
   - identifier_name
+  - line_length

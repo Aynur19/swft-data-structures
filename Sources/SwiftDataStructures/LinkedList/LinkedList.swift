@@ -33,7 +33,10 @@ where V: Comparable {
             if let next = tmp.next {
                 tmp = next
                 count += 1
-            } else { break }
+            } else {
+                end = tmp
+                break
+            }
         }
         
         return count
@@ -63,6 +66,7 @@ where V: Comparable {
     public func empty() -> Bool { count == 0 }
 }
         
+
 extension LinkedList {
     public func addAtHead(_ val: V) {
         let newHead = ListNode<V>(val)
@@ -86,6 +90,19 @@ extension LinkedList {
         }
         
         count += 1
+    }
+    
+    public func addAtEnd(_ list: ListNode<V>) {
+        if let end = end {
+            let lList = LinkedList(list)
+            end.next = lList.head
+            self.end = lList.end
+        } else {
+            self.head = .init(list)
+            self.end = head
+        }
+        
+        _ = getCount()
     }
     
     public func addAtIndex(_ index: Int, _ val: V) -> Bool {
@@ -112,6 +129,7 @@ extension LinkedList {
     }
 }
     
+
 extension LinkedList {
     public func removeFromHead() -> V? {
         guard let head = head else { return nil }
@@ -184,9 +202,101 @@ where V: CustomStringConvertible {
     public var description: String { head?.description ?? "[]" }
 }
 
-
 // MARK: LeetCode Problems Solutons
+extension LinkedList {
+    // MARK: LeetCode Problem 1669. Merge In Between Linked Lists
+    // Link: https://leetcode.com/problems/merge-in-between-linked-lists/
+    // Approach: Linked List
+    // Time complexity: O(n)
+    // Space complexity: O(1)
+    public func mergeInBetween(
+        _ list: ListNode<V>?,
+        startIn: Int,
+        endIn: Int
+    ) {
+        guard let list = list else { return }
+        
+        guard !self.empty() else {
+            self.addAtEnd(list)
+            return
+        }
+        
+        guard let leftNode = self.getNode(startIn - 1) else {
+            assertionFailure("Linked list node list1 at index `a` was not found")
+            return
+        }
+        
+        guard let rightNode = self.getNode(endIn) else {
+            assertionFailure("Linked list node list1 at index `b` was not found")
+            return
+        }
+        
+        leftNode.next = list
+        _ = self.getCount()
+        
+        if let next = rightNode.next {
+            self.addAtEnd(next)
+            rightNode.next = nil
+        }
+    }
+}
+
+
 extension LinkedList<Int> {
+    // MARK: LeetCode Problem 1171. Remove Zero Sum Consecutive Nodes from Linked List
+    // link: https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
+    // Approach: Hash Table, LinkedList
+    // Time complexity: O(n) => 12 ms
+    // Space complexity: O(n) => 15.66 MB
+    public func removeZeroSumSublists() {
+        guard var head = head else { return }
+        head = .init(0, next: head)
+        
+        var sum = 0
+        var dict = [Int:ListNode<Int>]() // [index:sum]
+        
+        func deleteNodes(_ node: ListNode<Int>, sum: Int) -> Int {
+            var tmpNode = node
+            var tmpSum = sum
+            var removedCount = 0
+            
+            while true {
+                if let next = tmpNode.next {
+                    tmpNode = next
+                    tmpSum += tmpNode.val
+                } else { return removedCount }
+                
+                if tmpSum == sum { return removedCount }
+                
+                dict[tmpSum] = nil
+                removedCount += 1
+            }
+        }
+        
+        var tmp = head
+        while true {
+            sum += tmp.val
+            
+            if let node = dict[sum] {
+                let removedCount = deleteNodes(node, sum: sum) + 1
+                
+                node.next = tmp.next
+                tmp.next = nil
+                tmp = node
+                count -= removedCount
+            } else {
+                dict[sum] = tmp
+            }
+            
+            if let next = tmp.next {
+                tmp = next
+            } else { break }
+        }
+        
+        self.head = head.next
+    }
+    
+    
     // MARK: LeetCode Problem 2. Add Two Numbers
     // Link: https://leetcode.com/problems/add-two-numbers/
     // Approach: Linked List
@@ -240,58 +350,5 @@ extension LinkedList<Int> {
         }
         
         return head.next
-    }
-    
-    // MARK: LeetCode Problem 1171. Remove Zero Sum Consecutive Nodes from Linked List
-    // link: https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
-    // Approach: Hash Table, LinkedList
-    // Time complexity: O(n) => 12 ms
-    // Space complexity: O(n) => 15.66 MB
-    public func removeZeroSumSublists() {
-        guard var head = head else { return }
-        head = .init(0, next: head)
-        
-        var sum = 0
-        var dict = [Int:ListNode<Int>]() // [index:sum]
-        
-        func deleteNodes(_ node: ListNode<Int>, sum: Int) -> Int {
-            var tmpNode = node
-            var tmpSum = sum
-            var removedCount = 0
-            
-            while true {
-                if let next = tmpNode.next {
-                    tmpNode = next
-                    tmpSum += tmpNode.val
-                } else { return removedCount }
-                
-                if tmpSum == sum { return removedCount }
-                
-                dict[tmpSum] = nil
-                removedCount += 1
-            }
-        }
-        
-        var tmp = head
-        while true {
-            sum += tmp.val
-            
-            if let node = dict[sum] {
-                let removedCount = deleteNodes(node, sum: sum) + 1
-                
-                node.next = tmp.next
-                tmp.next = nil
-                tmp = node
-                count -= removedCount
-            } else {
-                dict[sum] = tmp
-            }
-            
-            if let next = tmp.next {
-                tmp = next
-            } else { break }
-        }
-        
-        self.head = head.next
     }
 }
