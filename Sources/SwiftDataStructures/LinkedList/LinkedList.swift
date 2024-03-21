@@ -239,6 +239,38 @@ extension LinkedList {
             rightNode.next = nil
         }
     }
+    
+    
+    // MARK: LeetCode Problem 206. Reverse Linked List
+    // Link: https://leetcode.com/problems/3sum/
+    // Approach: Linked List
+    // Time complexity: O(n)
+    // Space complexity: O(1)
+    public func reverse() {
+        let reversedList = self.reversed()
+        head = reversedList.head
+        end = reversedList.end
+        count = reversedList.count
+    }
+    
+    
+    // MARK: LeetCode Problem 206. Reverse Linked List
+    // Link: https://leetcode.com/problems/3sum/
+    // Approach: Linked List
+    // Time complexity: O(n)
+    // Space complexity: O(1)
+    public func reversed() -> Self {
+        let lList = Self()
+        guard var tmp = head else { return lList }
+        
+        while true {
+            lList.addAtHead(tmp.val)
+            
+            if let next = tmp.next {
+                tmp = next
+            } else { return lList }
+        }
+    }
 }
 
 

@@ -159,6 +159,49 @@ final class LinkedListTests: XCTestCase {
     }
     
     
+    // MARK: LeetCode Problem 206. Reverse Linked List
+    // Link: https://leetcode.com/problems/3sum/
+    lazy var testCases_reverse: [(head: ListNode<Int>?, expected: ListNode<Int>?)] = {
+        var testsData = [(head: ListNode<Int>?, expected: ListNode<Int>?)]()
+        
+        testsData.append((
+            head: LinkedList([1, 2, 3, 4, 5]).getNode(0),
+            expected: LinkedList([5, 4, 3, 2, 1]).getNode(0)
+        ))
+        testsData.append((
+            head: .init(1, next: .init(2)),
+            expected: .init(2, next: .init(1))
+        ))
+        testsData.append((head: nil, expected: nil))
+        
+        return testsData
+    }()
+    
+    func tests_reverse() throws {
+        for idx in 0...1 {
+            for data in testCases_reverse {
+                let message = "idx: \(idx + 1); head: \(data.head?.description ?? "[]")"
+                let lList = data.head != nil ? LinkedList<Int>(data.head!) : .init()
+                let actual: ListNode<Int>?
+                
+                switch idx {
+                    case 0:
+                        actual = lList.reversed().getNode(0)
+                    default:
+                        lList.reverse()
+                        actual = lList.getNode(0)
+                }
+                
+                if data.expected != nil {
+                    XCTAssertEqual(actual!, data.expected!, message)
+                } else {
+                    XCTAssertTrue((actual == nil && data.expected == nil), message)
+                }
+            }
+        }
+    }
+    
+    
     // MARK: LeetCode Problem 2. Add Two Numbers
     // Link: https://leetcode.com/problems/add-two-numbers/
     lazy var testCases_2: [(l1: ListNode<Int>?, l2: ListNode<Int>?, expected: ListNode<Int>?)] = {
