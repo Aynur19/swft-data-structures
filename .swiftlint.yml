@@ -7,3 +7,4 @@ disabled_rules:
   - large_tuple
   - identifier_name
   - line_length
+  - file_length

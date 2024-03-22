@@ -241,6 +241,27 @@ extension LinkedList {
     }
     
     
+    // MARK: LeetCode Problem 234. Palindrome Linked List
+    // Link: https://leetcode.com/problems/palindrome-linked-list/
+    // Approach: Linked List, Recursion
+    // Time complexity: O(n)
+    // Space complexity: O(n)
+    public func isPalindrome() -> Bool {
+        guard var tmp = head else { return true }
+        
+        func check(_ node: ListNode<V>) -> Bool {
+            guard let next = node.next else { return true }
+            
+            let result = check(next) && tmp.val == next.val
+            tmp = tmp.next!
+            
+            return result
+        }
+        
+        return check(tmp)
+    }
+    
+    
     // MARK: LeetCode Problem 206. Reverse Linked List
     // Link: https://leetcode.com/problems/3sum/
     // Approach: Linked List

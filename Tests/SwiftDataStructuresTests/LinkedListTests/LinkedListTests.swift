@@ -159,6 +159,35 @@ final class LinkedListTests: XCTestCase {
     }
     
     
+    // MARK: LeetCode Problem 234. Palindrome Linked List
+    // Link: https://leetcode.com/problems/palindrome-linked-list/
+    lazy var testsCases_isPalindrome: [(head: ListNode<Int>?, expected: Bool)] = {
+        var testsData = [(head: ListNode<Int>?, expected: Bool)]()
+        
+        testsData.append((head: LinkedList([1, 2, 2, 1]).getNode(0), expected: true))
+        testsData.append((head: .init(1, next: .init(2)), expected: false))
+
+        return testsData
+    }()
+    
+    func tests_isPalindrome() throws {
+        let testsData = testsCases_isPalindrome
+
+        for data in testsData {
+            let message = "head: \(data.head?.description ?? "[]")"
+            let lList = LinkedList<Int>()
+            
+            if let head = data.head {
+                lList.addAtEnd(head)
+            }
+            
+            let actual = lList.isPalindrome()
+            
+            XCTAssertEqual(actual, data.expected, message)
+        }
+    }
+    
+    
     // MARK: LeetCode Problem 206. Reverse Linked List
     // Link: https://leetcode.com/problems/3sum/
     lazy var testCases_reverse: [(head: ListNode<Int>?, expected: ListNode<Int>?)] = {
@@ -204,7 +233,7 @@ final class LinkedListTests: XCTestCase {
     
     // MARK: LeetCode Problem 2. Add Two Numbers
     // Link: https://leetcode.com/problems/add-two-numbers/
-    lazy var testCases_2: [(l1: ListNode<Int>?, l2: ListNode<Int>?, expected: ListNode<Int>?)] = {
+    lazy var testCases_addNumbers: [(l1: ListNode<Int>?, l2: ListNode<Int>?, expected: ListNode<Int>?)] = {
         var testsData = [(l1: ListNode<Int>?, l2: ListNode<Int>?, expected: ListNode<Int>?)]()
         
         testsData.append((
@@ -235,7 +264,7 @@ final class LinkedListTests: XCTestCase {
     }()
     
     func tests_addNumbers() throws {
-        for data in testCases_2 {
+        for data in testCases_addNumbers {
             let message = "l1: \(data.l1?.description ?? "[]"); l2: \(data.l2?.description ?? "[]")"
             let actual = LinkedList.addNumbers(data.l1, data.l2)
             
