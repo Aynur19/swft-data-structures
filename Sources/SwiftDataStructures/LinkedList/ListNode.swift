@@ -5,8 +5,8 @@
 //  Created by Aynur Nasybullin on 12.03.2024.
 //
 
-public final class ListNode<V>
-where V: Comparable {
+public final class ListNode<V> {
+//where V: Comparable {
     public let val: V
     public var next: ListNode<V>?
     
@@ -17,7 +17,8 @@ where V: Comparable {
 }
 
 
-extension ListNode: Equatable {
+extension ListNode: Equatable
+where V: Comparable {
     public static func == (lhs: ListNode<V>, rhs: ListNode<V>) -> Bool {
         var lhs = lhs
         var rhs = rhs

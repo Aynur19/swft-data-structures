@@ -5,8 +5,8 @@
 //  Created by Aynur Nasybullin on 12.03.2024.
 //
 
-public final class LinkedList<V>: LinkedListProtocol
-where V: Comparable {
+public final class LinkedList<V>: LinkedListProtocol {
+//where V: Comparable {
     private var head: ListNode<V>?
     private var end:  ListNode<V>?
     private var count = 0
@@ -246,7 +246,7 @@ extension LinkedList {
     // Approach: Linked List, Recursion
     // Time complexity: O(n)
     // Space complexity: O(n)
-    public func isPalindrome() -> Bool {
+    public func isPalindrome() -> Bool where V: Comparable {
         guard var tmp = head else { return true }
         
         func check(_ node: ListNode<V>) -> Bool {

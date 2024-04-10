@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  QueueArray.swift
 //  
 //
 //  Created by Aynur Nasybullin on 10.04.2024.
